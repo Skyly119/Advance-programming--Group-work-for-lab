@@ -1,0 +1,9 @@
+#Input Alphabet: N/A
+#Tape Alphabet: {0,1}
+
+#Configuration
+initialState=q0
+acceptState=qa
+
+#BB(2)
+rules=q0,0,q1,1,RIGHT<>q0,1,q1,1,LEFT<>q1,0,q0,1,LEFT<>q1,1,qa,1,RIGHT

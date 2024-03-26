@@ -1,105 +1,36 @@
-package utm;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import utm.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import static utm.MoveClassical.LEFT;
-import static utm.MoveClassical.RIGHT;
 
-public class Main {
+
+/*
+A file describing a TM that decides whether 0 is the first symbol of an input string:
+UTM=“在输入为<TM,w>的情况下，其中TM是一个图灵机，w是一个输入字符串：
+
+将w加载到TM的磁带上。
+将TM的头移动到w的最左边的符号。
+将TM的状态设置为q0（即在TM的描述中指定的初始状态）。
+在每个时间步骤中，执行TM如下：
+(1) TM的头从当前指向的单元格（即当前单元格）读取符号。
+(2) 查找与当前状态和读取的符号相关联的规则。这些规则在TM的描述中指定。
+(3) TM的头用被触发规则指定的符号覆盖当前单元格。
+(4) TM的头根据被触发规则指定的移动向右移动一个单元格或向左移动一个单元格。
+(5) 根据被触发规则更新TM的状态。
+(6) 重复(1)-(5)直到TM的状态为qa或qr。状态qa和qr分别是接受和拒绝状态，这些状态在TM的描述中指定。
+如果TM最终处于qa，则TM已经停机并接受了输入w。如果TM最终处于qr，则TM已经停机并拒绝了w。如果没有达到这些状态中的任何一个，则TM将永远循环。
+检查TM的状态。如果TM停机，则UTM停机；否则，UTM将永远执行下去。
+ */
+public class Main extends UniversalTuringMachine{
     public static void main(String[] args) {
-        String filename = "example-2.desc";
+        String filename = "D:\\develop\\Java\\APLab1Test1\\src\\Example\\bb-3.desc";
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
-            String line;
-            HashMap<String, String> properties = new HashMap<>();
-            ArrayList<String> rules = new ArrayList<>();
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("rules=")) {
-                    String[] ruleParts = line.substring(6).split("<>");
-                    for (String rule : ruleParts) {
-                        rules.add(rule);
-                    }
-                }
-                else if (line.startsWith(" ")||line.startsWith("#")){
-                }
-                else if (line.startsWith("initialState")||line.startsWith("acceptState")||line.startsWith("rejectState")){
-                    String[] parts = line.split("=");
-                    properties.put(parts[0], parts[1]);
-                }
-            }
-            reader.close();
-            int count = 0;
-            String initialState = properties.get("initialState");
-            String acceptState = properties.get("acceptState");
-            String rejectState = properties.get("rejectState");
-            for (String rule : rules) {
-                System.out.println(rule);
-                count++;
-            }
-            UniversalTuringMachine utm1 = new UniversalTuringMachine();
-            TuringMachine machine1 = new TuringMachine(count,initialState,acceptState, rejectState);
-            for (String rule : rules) {
-                MoveClassical moverule = RIGHT;
-                if (rule.split(",")[4].equals("RIGHT")) {
-                    moverule = RIGHT;
-                }
-                else {
-                    moverule = LEFT;
-                }
-                machine1.addRule(rule.split(",")[0], rule.split(",")[1].toCharArray()[0],rule.split(",")[2],
-                        rule.split(",")[3].toCharArray()[0], moverule);
-                System.out.println(rule.split(",")[0]+rule.split(",")[1].toCharArray()[0]+rule.split(",")[2]+
-                        rule.split(",")[3].toCharArray()[0] +moverule);
-            }
-            utm1.loadTuringMachine(machine1);
-            String inputs = "01**X";
-            utm1.loadInput(inputs);
-            utm1.display();
-            Head head = machine1.getHead();
-            while(true){
-                //获取当前状态
-                String currentState = head.getCurrentState();
-                //获取当前符号
-                char currentCell = machine1.getTape().get(head.getCurrentCell());
-                //查找对应规则
-                String[][] machine1Rules = machine1.getRules();
-                String newState = null;
-                char newCell = ' ';
-                MoveClassical move = null;
-                for(int i=0; i< machine1Rules.length; i++){
-                    if(machine1Rules[i][0].equals(currentState) && machine1Rules[i][1].charAt(0) == currentCell){
-                        newState = machine1Rules[i][2];
-                        newCell = machine1Rules[i][3].charAt(0);
-                        move = MoveClassical.valueOf(machine1Rules[i][4]);
-                        break;
-                    }
-                }
-                if(newState != null){
-                    //规则存在
-                    //更新单元格
-                    utm1.writeOnCurrentCell(newCell);
-                    //移动磁头
-                    if(move == RIGHT){
-                        utm1.moveHead(RIGHT,true);
-                    }else {
-                        utm1.moveHead(MoveClassical.LEFT ,true);
-                    }
-                    //跟新状态
-                    utm1.updateHeadState(newState);
-                    //检查是否停机
-                    if(newState.equals(machine1.getAcceptState()) || newState.equals(machine1.getRejectState())){
-                    //到达停机状态
-                        utm1.displayHaltState(newState.equals(utm1.getTuringMachine().getAcceptState())
-                                ? HaltState.ACCEPTED : HaltState.REJECTED);
-                        break;
-                    }
-                }else {//没有匹配规则
-                    utm1.displayHaltState(HaltState.REJECTED);
-                    break;
-                }
-            }
+            TuringMachineHelper helper = new TuringMachineHelper();
+            helper.loadRulesFromFile(filename);
+            TuringMachine machine = helper.createTuringMachine();
+            UniversalTuringMachine utm = new UniversalTuringMachine();
+            LeftResetTuringMachine lrtm = new LeftResetTuringMachine();
+            BusyBeaverTuringMachine bbtm = new BusyBeaverTuringMachine();
+            String inputs = "01*X";
+            helper.runTuringMachine(bbtm, machine, inputs);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,10 @@
+#Input Alphabet: {0,1}
+#Tape Alphabet: {0,1,*,X}
+
+#Configuration
+initialState=q0
+acceptState=qa
+rejectState=qr
+
+#Converts 0->1 and 1->0 and then resets
+rules=q0,1,q0,0,RIGHT<>q0,0,q0,1,RIGHT<>q0,*,qa,*,RESET
