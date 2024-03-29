@@ -1,13 +1,14 @@
 import utm.*;
 
 //定义一个左重置图灵机,继承通用图灵机,实现Move接口
-
 public class LeftResetTuringMachine extends UniversalTuringMachine implements Move {
-    //定义一个左重置图灵机的构造函数
-    public LeftResetTuringMachine() {
+    TuringMachine machine;
+    public LeftResetTuringMachine(TuringMachine machine, String inputs) {
         super();
+        this.loadTuringMachine(machine);
+        this.loadInput(inputs);
+        this.machine = machine;
     }
-
     @Override
     public void moveHead(Move move, boolean isAnimated) {
         // 判断move是否为RESET

@@ -21,16 +21,24 @@ UTM=“在输入为<TM,w>的情况下，其中TM是一个图灵机，w是一个�
  */
 public class Main extends UniversalTuringMachine{
     public static void main(String[] args) {
-        String filename = "D:\\develop\\Java\\APLab1Test1\\src\\Example\\bb-3.desc";
+        MachineType machineType = null;
+        String filename = "src\\Example\\bb-2.desc";
         try {
             TuringMachineHelper helper = new TuringMachineHelper();
             helper.loadRulesFromFile(filename);
             TuringMachine machine = helper.createTuringMachine();
-            UniversalTuringMachine utm = new UniversalTuringMachine();
-            LeftResetTuringMachine lrtm = new LeftResetTuringMachine();
-            BusyBeaverTuringMachine bbtm = new BusyBeaverTuringMachine();
+            machineType = MachineType.BB;
             String inputs = "01*X";
-            helper.runTuringMachine(bbtm, machine, inputs);
+            switch (machineType){
+                case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine,inputs));
+                case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine));
+                case U -> {
+                    UniversalTuringMachine universalTuringMachine = new UniversalTuringMachine();
+                    universalTuringMachine.loadTuringMachine(machine);
+                    universalTuringMachine.loadInput(inputs);
+                    helper.runTuringMachine(universalTuringMachine);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

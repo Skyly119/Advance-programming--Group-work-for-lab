@@ -1,19 +1,13 @@
 import utm.*;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
-import static utm.MoveClassical.LEFT;
-import static utm.MoveClassical.RIGHT;
-
 public class TuringMachineHelper {
-
     public Properties properties = new Properties();
     public ArrayList<String> rules = new ArrayList<>();
-
     public void loadRulesFromFile(String filename) throws IOException {
         try {
             properties.load(new FileInputStream(filename));
@@ -42,13 +36,11 @@ public class TuringMachineHelper {
         }
         return machine;
     }
-
     //classical turing machine
-    public void runTuringMachine(UniversalTuringMachine utm, TuringMachine machine, String inputs) {
-        utm.loadTuringMachine(machine);
-        utm.loadInput(inputs);
-        utm.display();
+    public void runTuringMachine(UniversalTuringMachine utm) {
+        TuringMachine machine = utm.getTuringMachine();
         Head head = machine.getHead();
+        utm.display();
         while(true){
             //获取当前状态
             String currentState = head.getCurrentState();
@@ -58,16 +50,17 @@ public class TuringMachineHelper {
             String[][] machineRules = machine.getRules();
             String newState = null;
             char newCell = ' ';
-            Move move = null;
+            ExtendedMoveClassical move = null;
             for (String[] machineRule : machineRules) {
                 if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
                     newState = machineRule[2];
                     newCell = machineRule[3].charAt(0);
-                    if (machineRule[4].equals("RESET")) {
-                        move = ExtendedMoveClassical.RESET;
-                    } else {
-                        move = MoveClassical.valueOf(machineRule[4]);
-                    }
+                    switch (machineRule[4]) {
+                        case "RIGHT" ->  move = ExtendedMoveClassical.RIGHT;
+                        case "LEFT" -> move = ExtendedMoveClassical.LEFT;
+                        case "RESET" ->  move = ExtendedMoveClassical.RESET;
+                        default -> throw new IllegalArgumentException("Invalid machine rule: " + machineRule[4]);
+                    };
                     break;
                 }
             }
@@ -76,11 +69,12 @@ public class TuringMachineHelper {
                 //更新单元格
                 utm.writeOnCurrentCell(newCell);
                 //移动磁头
-                if(move == RIGHT){
-                    utm.moveHead(RIGHT,true);
-                }else {
-                    utm.moveHead(MoveClassical.LEFT ,true);
-                }
+                switch (move) {
+                    case RIGHT ->  utm.moveHead(MoveClassical.RIGHT,true);
+                    case LEFT -> utm.moveHead(MoveClassical.LEFT ,true);
+                    case RESET ->  utm.moveHead(ExtendedMoveClassical.RESET, true);
+                    default -> throw new IllegalArgumentException("Invalid move : " + move);
+                };
                 //跟新状态
                 utm.updateHeadState(newState);
                 //检查是否停机
@@ -92,120 +86,6 @@ public class TuringMachineHelper {
                 }
             }else {//没有匹配规则
                 utm.displayHaltState(HaltState.REJECTED);
-                break;
-            }
-        }
-    }
-    //left reset turing machine
-
-    public void runTuringMachine(LeftResetTuringMachine lrtm, TuringMachine machine, String inputs) {
-        lrtm.loadTuringMachine(machine);
-        lrtm.loadInput(inputs);
-        lrtm.display();
-        Head head = machine.getHead();
-        while(true){
-            //获取当前状态
-            String currentState = head.getCurrentState();
-            //获取当前符号
-            char currentCell = machine.getTape().get(head.getCurrentCell());
-            //查找对应规则
-            String[][] machineRules = machine.getRules();
-            String newState = null;
-            char newCell = ' ';
-            Move move = null;
-            for (String[] machineRule : machineRules) {
-                if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
-                    newState = machineRule[2];
-                    newCell = machineRule[3].charAt(0);
-                    if (machineRule[4].equals("RESET")) {
-                        move = ExtendedMoveClassical.RESET;
-                    } else {
-                        move = MoveClassical.valueOf(machineRule[4]);
-                    }
-                    break;
-                }
-            }
-            if(newState != null){
-                //规则存在
-                //更新单元格
-                lrtm.writeOnCurrentCell(newCell);
-                //移动磁头
-                if(move == ExtendedMoveClassical.RESET){
-                    lrtm.moveHead(ExtendedMoveClassical.RESET,true);
-                }else if(move == MoveClassical.RIGHT){
-                    lrtm.moveHead(MoveClassical.RIGHT,true);
-                }
-                //跟新状态
-                lrtm.updateHeadState(newState);
-                //检查是否停机
-                if(newState.equals(machine.getAcceptState()) || newState.equals(machine.getRejectState())){
-                    //到达停机状态
-                    lrtm.displayHaltState(newState.equals(lrtm.getTuringMachine().getAcceptState())
-                            ? HaltState.ACCEPTED : HaltState.REJECTED);
-                    break;
-                }
-            }else {//没有匹配规则
-                lrtm.displayHaltState(HaltState.REJECTED);
-                break;
-            }
-        }
-    }
-    //busy beaver turing machine
-
-    public void runTuringMachine(BusyBeaverTuringMachine bbtm, TuringMachine machine, String inputs){
-        bbtm.loadTuringMachine(machine);
-        bbtm.loadInput(inputs);
-        bbtm.display();
-        Head head = machine.getHead();
-        // 初始化纸带
-        bbtm.loadInput("00000000000000000000");
-        // 每次开始新的执行周期时，将磁头重新设置到第10个单元格
-        for (int i = 0; i < 10; i++) {
-            bbtm.moveHead(MoveClassical.RIGHT, false);
-        }
-        while(true){
-            //获取当前状态
-            String currentState = head.getCurrentState();
-            //获取当前符号
-            char currentCell = machine.getTape().get(head.getCurrentCell());
-            //查找对应规则
-            String[][] machineRules = machine.getRules();
-            String newState = null;
-            char newCell = ' ';
-            Move move = null;
-            for (String[] machineRule : machineRules) {
-                if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
-                    newState = machineRule[2];
-                    newCell = machineRule[3].charAt(0);
-                    if (machineRule[4].equals("RESET")) {
-                        move = ExtendedMoveClassical.RESET;
-                    } else {
-                        move = MoveClassical.valueOf(machineRule[4]);
-                    }
-                    break;
-                }
-            }
-            if(newState != null){
-                //规则存在
-                //更新单元格
-                bbtm.writeOnCurrentCell(newCell);
-                //移动磁头
-                if(move == RIGHT){
-                    bbtm.moveHead(RIGHT,true);
-                }else {
-                    bbtm.moveHead(MoveClassical.LEFT ,true);
-                }
-                //跟新状态
-                bbtm.updateHeadState(newState);
-                //检查是否停机
-                if(newState.equals(machine.getAcceptState()) || newState.equals(machine.getRejectState())){
-                    //到达停机状态
-                    bbtm.displayHaltState(newState.equals(bbtm.getTuringMachine().getAcceptState())
-                            ? HaltState.ACCEPTED : HaltState.REJECTED);
-                    break;
-                }
-            }else {//没有匹配规则
-                bbtm.displayHaltState(HaltState.REJECTED);
                 break;
             }
         }
