@@ -1,42 +1,34 @@
 import utm.*;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Properties;
+
 import static utm.MoveClassical.LEFT;
 import static utm.MoveClassical.RIGHT;
 
 public class TuringMachineHelper {
 
-    public HashMap<String, String> properties = new HashMap<>();
+    public Properties properties = new Properties();
     public ArrayList<String> rules = new ArrayList<>();
 
     public void loadRulesFromFile(String filename) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.startsWith("rules=")) {
-                String[] ruleParts = line.substring(6).split("<>");
-                for (String rule : ruleParts) {
-                    rules.add(rule);
-                }
-            }
-            else if (line.startsWith(" ")||line.startsWith("#")){
-            }
-            else if (line.startsWith("initialState")||line.startsWith("acceptState")||line.startsWith("rejectState")){
-                String[] parts = line.split("=");
-                properties.put(parts[0], parts[1]);
-            }
+        try {
+            properties.load(new FileInputStream(filename));
+        }catch (IOException e) {
+            System.out.println();
         }
-        reader.close();
+        String[] ruleParts = properties.getProperty("rules").split("<>");
+        rules.addAll(Arrays.asList(ruleParts));
     }
 
     public TuringMachine createTuringMachine() {
         int count = rules.size();
-        String initialState = properties.get("initialState");
-        String acceptState = properties.get("acceptState");
-        String rejectState = properties.get("rejectState");
+        String initialState = properties.getProperty("initialState");
+        String acceptState = properties.getProperty("acceptState");
+        String rejectState = properties.getProperty("rejectState");
         TuringMachine machine = new TuringMachine(count,initialState,acceptState, rejectState);
         for (String rule : rules) {
             Move moveRule;
