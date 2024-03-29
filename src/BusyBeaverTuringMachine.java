@@ -1,7 +1,6 @@
 import utm.*;
 
 public class BusyBeaverTuringMachine extends UniversalTuringMachine {
-    TuringMachine machine = null;
     public BusyBeaverTuringMachine(TuringMachine machine) {
         super();
         this.loadTuringMachine(machine);

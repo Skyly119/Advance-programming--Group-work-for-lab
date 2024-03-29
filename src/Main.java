@@ -21,7 +21,7 @@ UTM=“在输入为<TM,w>的情况下，其中TM是一个图灵机，w是一个�
  */
 public class Main extends UniversalTuringMachine{
     public static void main(String[] args) {
-        MachineType machineType = null;
+        MachineType machineType;
         String filename = "src\\Example\\bb-2.desc";
         try {
             TuringMachineHelper helper = new TuringMachineHelper();

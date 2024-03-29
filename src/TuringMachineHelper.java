@@ -60,7 +60,7 @@ public class TuringMachineHelper {
                         case "LEFT" -> move = ExtendedMoveClassical.LEFT;
                         case "RESET" ->  move = ExtendedMoveClassical.RESET;
                         default -> throw new IllegalArgumentException("Invalid machine rule: " + machineRule[4]);
-                    };
+                    }
                     break;
                 }
             }
@@ -74,7 +74,7 @@ public class TuringMachineHelper {
                     case LEFT -> utm.moveHead(MoveClassical.LEFT ,true);
                     case RESET ->  utm.moveHead(ExtendedMoveClassical.RESET, true);
                     default -> throw new IllegalArgumentException("Invalid move : " + move);
-                };
+                }
                 //跟新状态
                 utm.updateHeadState(newState);
                 //检查是否停机
