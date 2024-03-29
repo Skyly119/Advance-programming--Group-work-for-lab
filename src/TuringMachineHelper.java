@@ -31,16 +31,12 @@ public class TuringMachineHelper {
         String rejectState = properties.getProperty("rejectState");
         TuringMachine machine = new TuringMachine(count,initialState,acceptState, rejectState);
         for (String rule : rules) {
-            Move moveRule;
-            if (rule.split(",")[4].equals("RIGHT")) {
-                moveRule = MoveClassical.RIGHT;
-            } else if (rule.split(",")[4].equals("LEFT")) {
-                moveRule = MoveClassical.LEFT;
-            } else if (rule.split(",")[4].equals("RESET")) {
-                moveRule = ExtendedMoveClassical.RESET;
-            } else {
-                throw new IllegalArgumentException("Invalid move rule: " + rule.split(",")[4]);
-            }
+            Move moveRule = switch (rule.split(",")[4]) {
+                case "RIGHT" -> MoveClassical.RIGHT;
+                case "LEFT" -> MoveClassical.LEFT;
+                case "RESET" -> ExtendedMoveClassical.RESET;
+                default -> throw new IllegalArgumentException("Invalid move rule: " + rule.split(",")[4]);
+            };
             machine.addRule(rule.split(",")[0], rule.split(",")[1].toCharArray()[0],rule.split(",")[2],
                     rule.split(",")[3].toCharArray()[0], moveRule);
         }
@@ -63,14 +59,14 @@ public class TuringMachineHelper {
             String newState = null;
             char newCell = ' ';
             Move move = null;
-            for(int i=0; i< machineRules.length; i++){
-                if(machineRules[i][0].equals(currentState) && machineRules[i][1].charAt(0) == currentCell){
-                    newState = machineRules[i][2];
-                    newCell = machineRules[i][3].charAt(0);
-                    if (machineRules[i][4].equals("RESET")) {
+            for (String[] machineRule : machineRules) {
+                if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
+                    newState = machineRule[2];
+                    newCell = machineRule[3].charAt(0);
+                    if (machineRule[4].equals("RESET")) {
                         move = ExtendedMoveClassical.RESET;
                     } else {
-                        move = MoveClassical.valueOf(machineRules[i][4]);
+                        move = MoveClassical.valueOf(machineRule[4]);
                     }
                     break;
                 }
@@ -117,14 +113,14 @@ public class TuringMachineHelper {
             String newState = null;
             char newCell = ' ';
             Move move = null;
-            for(int i=0; i< machineRules.length; i++){
-                if(machineRules[i][0].equals(currentState) && machineRules[i][1].charAt(0) == currentCell){
-                    newState = machineRules[i][2];
-                    newCell = machineRules[i][3].charAt(0);
-                    if (machineRules[i][4].equals("RESET")) {
+            for (String[] machineRule : machineRules) {
+                if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
+                    newState = machineRule[2];
+                    newCell = machineRule[3].charAt(0);
+                    if (machineRule[4].equals("RESET")) {
                         move = ExtendedMoveClassical.RESET;
                     } else {
-                        move = MoveClassical.valueOf(machineRules[i][4]);
+                        move = MoveClassical.valueOf(machineRule[4]);
                     }
                     break;
                 }
@@ -177,14 +173,14 @@ public class TuringMachineHelper {
             String newState = null;
             char newCell = ' ';
             Move move = null;
-            for(int i=0; i< machineRules.length; i++){
-                if(machineRules[i][0].equals(currentState) && machineRules[i][1].charAt(0) == currentCell){
-                    newState = machineRules[i][2];
-                    newCell = machineRules[i][3].charAt(0);
-                    if (machineRules[i][4].equals("RESET")) {
+            for (String[] machineRule : machineRules) {
+                if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
+                    newState = machineRule[2];
+                    newCell = machineRule[3].charAt(0);
+                    if (machineRule[4].equals("RESET")) {
                         move = ExtendedMoveClassical.RESET;
                     } else {
-                        move = MoveClassical.valueOf(machineRules[i][4]);
+                        move = MoveClassical.valueOf(machineRule[4]);
                     }
                     break;
                 }
