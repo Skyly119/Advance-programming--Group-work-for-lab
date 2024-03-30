@@ -1,4 +1,5 @@
 import utm.*;
+
 import java.io.IOException;
 
 
@@ -19,24 +20,31 @@ UTM=“在输入为<TM,w>的情况下，其中TM是一个图灵机，w是一个�
 如果TM最终处于qa，则TM已经停机并接受了输入w。如果TM最终处于qr，则TM已经停机并拒绝了w。如果没有达到这些状态中的任何一个，则TM将永远循环。
 检查TM的状态。如果TM停机，则UTM停机；否则，UTM将永远执行下去。
  */
-public class Main extends UniversalTuringMachine{
+public class Main extends UniversalTuringMachine {
     public static void main(String[] args) {
-        MachineType machineType;
-        String filename = "src\\Example\\bb-2.desc";
+/*        if (args.length != 3) {
+            System.out.println("Hey man, input three parameters");
+            return;
+        }
+        String fileName = args[0];
+        String inputs = args[1];
+        boolean isAnimated;
+        isAnimated = args[2].equals("--animation");*/
+        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/bb-2.desc";
+        String inputs = "01*X";
+        boolean isAnimated = true;
         try {
             TuringMachineHelper helper = new TuringMachineHelper();
-            helper.loadRulesFromFile(filename);
+            MachineType machineType = helper.loadRulesFromFile(fileName);
             TuringMachine machine = helper.createTuringMachine();
-            machineType = MachineType.BB;
-            String inputs = "01*X";
-            switch (machineType){
-                case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine,inputs));
-                case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine));
+            switch (machineType) {
+                case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);
+                case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine), isAnimated);
                 case U -> {
                     UniversalTuringMachine universalTuringMachine = new UniversalTuringMachine();
                     universalTuringMachine.loadTuringMachine(machine);
                     universalTuringMachine.loadInput(inputs);
-                    helper.runTuringMachine(universalTuringMachine);
+                    helper.runTuringMachine(universalTuringMachine, isAnimated);
                 }
             }
         } catch (IOException e) {
