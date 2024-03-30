@@ -46,7 +46,9 @@ public class TuringMachineHelper {
     public void runTuringMachine(UniversalTuringMachine utm, boolean isAnimated) {
         TuringMachine machine = utm.getTuringMachine();
         Head head = machine.getHead();
-        utm.display();
+        if (isAnimated) {
+            utm.display();
+        }
         while (true) {
             //获取当前状态
             String currentState = head.getCurrentState();

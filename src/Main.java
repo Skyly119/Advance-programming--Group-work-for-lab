@@ -28,11 +28,10 @@ public class Main extends UniversalTuringMachine {
         }
         String fileName = args[0];
         String inputs = args[1];
-        boolean isAnimated;
-        isAnimated = args[2].equals("--animation");*/
-        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/bb-2.desc";
+        boolean isAnimated = args[2].equals("--animation");*/
+        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/bb-3.desc";
         String inputs = "01*X";
-        boolean isAnimated = true;
+        boolean isAnimated = false;
         try {
             TuringMachineHelper helper = new TuringMachineHelper();
             MachineType machineType = helper.loadRulesFromFile(fileName);
