@@ -6,11 +6,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * The TuringMachineHelper class assists in building Turing machines, including reading data,
+ * configuring Turing machines, and running UniversalTuring machines.
+ * This class contains three methods:
+ * 1. loadRulesFromFile: This method reads data from a file via an input stream, stores properties as key-value pairs using properties.getProperty() method,
+ * and splits rules  and saves them. Finally, it returns the type of the Turing machine read and the MachineType judgment.
+ * 2. createTuringMachine: This method configures the initial, accept, and reject states of the Turing machine, as well as the running rules.
+ * It retrieves the initial, accept, and reject states from properties.getProperty() method and configures the rules of the Turing machine
+ * by iterating through the Rules string array.
+ * 3. runTuringMachine: This method runs the UniversalTuringMachine and plays the animation.
+ * It iterates through Turing machine rules, finds update modes based on input via a switch statement, and updates the Turing machine and its animation.
+ */
 public class TuringMachineHelper {
+
+    /**
+     * Properties associated with the Turing machine configuration.
+     * This can include various parameters and settings.
+     */
     public Properties properties = new Properties();
+    /**
+     * Rules defining the behavior of the Turing machine.
+     * Each rule represents a transition from one state to another based on the current symbol.
+     */
     public ArrayList<String> rules = new ArrayList<>();
 
-    // 这个方法同时返回判断的machineType种类
+    /**
+     * This method reads data from a file via an input stream, stores properties as key-value pairs using properties.getProperty() method,
+     * and splits rules and saves them. Finally, it returns the type of the Turing machine read and the MachineType judgment.
+     * @param fileName the file name to read data from
+     * @return the type of Turing machine read
+     * @throws IOException if an I/O error occurs
+     */
     public MachineType loadRulesFromFile(String fileName) throws IOException {
         try {
             properties.load(new FileInputStream(fileName));
@@ -19,10 +46,17 @@ public class TuringMachineHelper {
         }
         String[] ruleParts = properties.getProperty("rules").split("<>");
         rules.addAll(Arrays.asList(ruleParts));
-        // TODO:返回判断的machineType种类
+        // TODO: Return the type of the Turing machine read
         return MachineType.convertStringToType(properties.getProperty("type"));
     }
 
+    /**
+     * This method configures the initial, accept, and reject states of the Turing machine, as well as the running rules.
+     * It retrieves the initial, accept, and reject states from properties.getProperty() method and configures the rules of the Turing machine
+     * by iterating through the Rules string array.
+     *
+     * @return the configured Turing machine object
+     */
     public TuringMachine createTuringMachine() {
         int count = rules.size();
         String initialState = properties.getProperty("initialState");
@@ -42,7 +76,13 @@ public class TuringMachineHelper {
         return machine;
     }
 
-    //classical turing machine
+    /**
+     * This method runs the UniversalTuringMachine and plays the animation.
+     * It iterates through Turing machine rules, finds update modes based on input via a switch statement,
+     * and updates the Turing machine and its animation.
+     * @param utm        the UniversalTuringMachine for animation demonstration
+     * @param isAnimated controls whether the Turing machine animation is played
+     */
     public void runTuringMachine(UniversalTuringMachine utm, boolean isAnimated) {
         TuringMachine machine = utm.getTuringMachine();
         Head head = machine.getHead();
@@ -50,11 +90,11 @@ public class TuringMachineHelper {
             utm.display();
         }
         while (true) {
-            //获取当前状态
+            // Get the current state
             String currentState = head.getCurrentState();
-            //获取当前符号
+            // Get the current symbol
             char currentCell = machine.getTape().get(head.getCurrentCell());
-            //查找对应规则
+            // Look up corresponding rules
             String[][] machineRules = machine.getRules();
             String newState = null;
             char newCell = ' ';
@@ -73,29 +113,31 @@ public class TuringMachineHelper {
                 }
             }
             if (newState != null) {
-                //规则存在
-                //更新单元格
+                // Rule exists
+                // Update the cell
                 utm.writeOnCurrentCell(newCell);
-                //移动磁头
+                // Move the head
                 switch (move) {
                     case RIGHT -> utm.moveHead(MoveClassical.RIGHT, isAnimated);
                     case LEFT -> utm.moveHead(MoveClassical.LEFT, isAnimated);
                     case RESET -> utm.moveHead(ExtendedMoveClassical.RESET, isAnimated);
                     default -> throw new IllegalArgumentException("Invalid move : " + move);
                 }
-                //跟新状态
+                // Update the state
                 utm.updateHeadState(newState);
-                //检查是否停机
+                // Check for halting
                 if (newState.equals(machine.getAcceptState()) || newState.equals(machine.getRejectState())) {
-                    //到达停机状态
+                    // Reached halting state
                     utm.displayHaltState(newState.equals(utm.getTuringMachine().getAcceptState())
                             ? HaltState.ACCEPTED : HaltState.REJECTED);
                     break;
                 }
-            } else {//没有匹配规则
+            } else {// No matching rule
                 utm.displayHaltState(HaltState.REJECTED);
                 break;
             }
         }
     }
 }
+
+

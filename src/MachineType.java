@@ -2,8 +2,20 @@
  * Represents the types of turning machines.
  */
 public enum MachineType {
+
+    /**
+     *  Represents Left-Reset Turing Machine (LR)
+     */
     LR,
+
+    /**
+     * Represents usy Beaver Turing Machine (BB) turning machine.
+     */
     BB,
+
+    /**
+     * Represents an Unbounded (U) turning machine.
+     */
     U;
 
     /**

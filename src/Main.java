@@ -5,37 +5,49 @@ import java.io.IOException;
 
 /*
 A file describing a TM that decides whether 0 is the first symbol of an input string:
-UTM=“在输入为<TM,w>的情况下，其中TM是一个图灵机，w是一个输入字符串：
+UTM= Given an input <TM,w>, where TM is a Turing machine and w is an input string:
 
-将w加载到TM的磁带上。
-将TM的头移动到w的最左边的符号。
-将TM的状态设置为q0（即在TM的描述中指定的初始状态）。
-在每个时间步骤中，执行TM如下：
-(1) TM的头从当前指向的单元格（即当前单元格）读取符号。
-(2) 查找与当前状态和读取的符号相关联的规则。这些规则在TM的描述中指定。
-(3) TM的头用被触发规则指定的符号覆盖当前单元格。
-(4) TM的头根据被触发规则指定的移动向右移动一个单元格或向左移动一个单元格。
-(5) 根据被触发规则更新TM的状态。
-(6) 重复(1)-(5)直到TM的状态为qa或qr。状态qa和qr分别是接受和拒绝状态，这些状态在TM的描述中指定。
-如果TM最终处于qa，则TM已经停机并接受了输入w。如果TM最终处于qr，则TM已经停机并拒绝了w。如果没有达到这些状态中的任何一个，则TM将永远循环。
-检查TM的状态。如果TM停机，则UTM停机；否则，UTM将永远执行下去。
+Load w onto the tape of TM.
+
+Move the head of TM to the leftmost symbol of w.
+
+Set the state of TM to q0 (i.e., the initial state specified in the description of TM).
+
+At each time step, execute TM as follows:
+(1) Read the symbol from the current cell pointed by the head of TM.
+(2) Look up the rules associated with the current state and the symbol read. These rules are specified in the description of TM.
+(3) Replace the current cell with the symbol specified by the triggered rule.
+(4) Move the head of TM one cell to the right or left based on the movement specified by the triggered rule.
+(5) Update the state of TM according to the triggered rule.
+(6) Repeat steps (1)-(5) until the state of TM is qa or qr. States qa and qr are acceptance and rejection states, respectively, specified in the description of TM.
+
+If TM ends in state qa, it halts and accepts the input w. If TM ends in state qr, it halts and rejects w. If neither of these states is reached, TM will loop indefinitely.
+
+Check the state of TM. If TM halts, UTM halts; otherwise, UTM will continue indefinitely.
+*/
+/**
+ * Main class to run a Turing machine.
  */
 public class Main extends UniversalTuringMachine {
+
+    /**
+     * Main method to execute a Turing machine.
+     *
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
-/*        if (args.length != 3) {
-            System.out.println("Hey man, input three parameters");
-            return;
-        }
-        String fileName = args[0];
-        String inputs = args[1];
-        boolean isAnimated = args[2].equals("--animation");*/
-        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/bb-3.desc";
+        // Define file name, input string, and animation flag
+        String fileName = "src\\Example\\bb-2.desc";
         String inputs = "01*X";
         boolean isAnimated = false;
+
         try {
+            // Load rules from the file and determine the type of machine
             TuringMachineHelper helper = new TuringMachineHelper();
             MachineType machineType = helper.loadRulesFromFile(fileName);
             TuringMachine machine = helper.createTuringMachine();
+
+            // Run the appropriate type of Turing machine based on the machine type
             switch (machineType) {
                 case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);
                 case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine), isAnimated);
