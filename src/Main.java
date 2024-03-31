@@ -1,7 +1,7 @@
+import javadoc.ClassicTuringMachine;
 import utm.*;
 
 import java.io.IOException;
-
 
 
 /**
@@ -25,8 +25,8 @@ public class Main extends UniversalTuringMachine {
         String inputs = args[1];
         boolean isAnimated;
         isAnimated = args[2].equals("--animation");*/
-        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/bb-2.desc";
-        String inputs = "01*X";
+        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/lr-convert.desc";
+        String inputs = "01010000";
         boolean isAnimated = true;
 
         try {
@@ -39,12 +39,7 @@ public class Main extends UniversalTuringMachine {
             switch (machineType) {
                 case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);
                 case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine), isAnimated);
-                case U -> {
-                    UniversalTuringMachine universalTuringMachine = new UniversalTuringMachine();
-                    universalTuringMachine.loadTuringMachine(machine);
-                    universalTuringMachine.loadInput(inputs);
-                    helper.runTuringMachine(universalTuringMachine, isAnimated);
-                }
+                case U -> helper.runTuringMachine(new ClassicTuringMachine(machine, inputs), isAnimated);
             }
         } catch (IOException e) {
             e.printStackTrace();

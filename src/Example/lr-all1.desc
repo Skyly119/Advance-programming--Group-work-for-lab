@@ -5,6 +5,6 @@
 initialState=q0
 acceptState=qa
 rejectState=qr
-
+type=LR
 #Decides whether all symbols are 1
 rules=q0,0,q0,0,RIGHT<>q0,1,q0,X,RIGHT<>q0,*,q1,*,RESET<>q1,X,q1,X,RIGHT<>q1,0,qr,0,RESET<>q1,*,qa,*,RESET

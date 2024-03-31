@@ -5,6 +5,6 @@
 initialState=q0
 acceptState=qa
 rejectState=qr
-
+type=U
 #Delta Function: Decides whether 0 is the first symbol of an input string
 rules=q0,0,qa,0,RIGHT<>q0,1,qr,1,RIGHT<>q0,*,qr,*,RIGHT
