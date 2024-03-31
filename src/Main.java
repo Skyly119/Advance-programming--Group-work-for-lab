@@ -38,10 +38,17 @@ public class Main extends UniversalTuringMachine {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        // Define file name, input string, and animation flag
-        String fileName = "src\\Example\\bb-2.desc";
+/*        if (args.length != 3) {
+            System.out.println("Hey man, input three parameters");
+            return;
+        }
+        String fileName = args[0];
+        String inputs = args[1];
+        boolean isAnimated;
+        isAnimated = args[2].equals("--animation");*/
+        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/bb-2.desc";
         String inputs = "01*X";
-        boolean isAnimated = false;
+        boolean isAnimated = true;
 
         try {
             // Load rules from the file and determine the type of machine
