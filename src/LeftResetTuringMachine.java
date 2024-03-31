@@ -8,7 +8,7 @@ public class LeftResetTuringMachine extends UniversalTuringMachine implements Mo
      * Constructs a Left Reset Turing Machine and initializes it.
      *
      * @param machine the Turing machine bound to this Left Reset Turing Machine
-     * @param inputs the input string for the Turing machine
+     * @param inputs  the input string for the Turing machine
      */
     public LeftResetTuringMachine(TuringMachine machine, String inputs) {
         super();
@@ -22,7 +22,7 @@ public class LeftResetTuringMachine extends UniversalTuringMachine implements Mo
      * The method moveHead is used to determine the type of movement and whether a reset operation should be performed.
      * Moves the tape head of the Turing machine according to the specified direction.
      *
-     * @param move the direction in which the Turing machine head should move
+     * @param move       the direction in which the Turing machine head should move
      * @param isAnimated controls whether animation should be played
      */
     @Override

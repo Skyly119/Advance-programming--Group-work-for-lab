@@ -10,13 +10,9 @@ import java.util.Properties;
  * The TuringMachineHelper class assists in building Turing machines, including reading data,
  * configuring Turing machines, and running UniversalTuring machines.
  * This class contains three methods:
- * 1. loadRulesFromFile: This method reads data from a file via an input stream, stores properties as key-value pairs using properties.getProperty() method,
- * and splits rules  and saves them. Finally, it returns the type of the Turing machine read and the MachineType judgment.
- * 2. createTuringMachine: This method configures the initial, accept, and reject states of the Turing machine, as well as the running rules.
- * It retrieves the initial, accept, and reject states from properties.getProperty() method and configures the rules of the Turing machine
- * by iterating through the Rules string array.
- * 3. runTuringMachine: This method runs the UniversalTuringMachine and plays the animation.
- * It iterates through Turing machine rules, finds update modes based on input via a switch statement, and updates the Turing machine and its animation.
+ * 1. loadRulesFromFile
+ * 2. createTuringMachine
+ * 3. runTuringMachine
  */
 public class TuringMachineHelper {
 
@@ -34,6 +30,7 @@ public class TuringMachineHelper {
     /**
      * This method reads data from a file via an input stream, stores properties as key-value pairs using properties.getProperty() method,
      * and splits rules and saves them. Finally, it returns the type of the Turing machine read and the MachineType judgment.
+     *
      * @param fileName the file name to read data from
      * @return the type of Turing machine read
      * @throws IOException if an I/O error occurs
@@ -46,7 +43,6 @@ public class TuringMachineHelper {
         }
         String[] ruleParts = properties.getProperty("rules").split("<>");
         rules.addAll(Arrays.asList(ruleParts));
-        // TODO: Return the type of the Turing machine read
         return MachineType.convertStringToType(properties.getProperty("type"));
     }
 
@@ -77,9 +73,10 @@ public class TuringMachineHelper {
     }
 
     /**
-     * This method runs the UniversalTuringMachine and plays the animation.
+     * This method runs the UniversalTuringMachine and plays the animation if needed.
      * It iterates through Turing machine rules, finds update modes based on input via a switch statement,
      * and updates the Turing machine and its animation.
+     *
      * @param utm        the UniversalTuringMachine for animation demonstration
      * @param isAnimated controls whether the Turing machine animation is played
      */

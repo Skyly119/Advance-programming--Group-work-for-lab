@@ -25,8 +25,10 @@ If TM ends in state qa, it halts and accepts the input w. If TM ends in state qr
 
 Check the state of TM. If TM halts, UTM halts; otherwise, UTM will continue indefinitely.
 */
+
 /**
  * Main class to run a Turing machine.
+ * Extends UniversalTuringMachine to leverage its functionality.
  */
 public class Main extends UniversalTuringMachine {
 

@@ -20,12 +20,5 @@ public enum ExtendedMoveClassical implements Move {
      * Represents the resetting of the tape head's position.
      */
     RESET;
-
-    /**
-     * Constructs an instance of ExtendedMoveClassical.
-     * This constructor is package-private to restrict instantiation outside the enum.
-     */
-    ExtendedMoveClassical() {
-    }
 }
 

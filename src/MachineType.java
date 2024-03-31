@@ -4,7 +4,7 @@
 public enum MachineType {
 
     /**
-     *  Represents Left-Reset Turing Machine (LR)
+     * Represents Left-Reset Turing Machine (LR)
      */
     LR,
 
