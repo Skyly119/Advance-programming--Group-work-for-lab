@@ -1,9 +1,12 @@
 import utm.*;
 
 /**
- * This class represents a Left Reset Turing Machine.
+ * This class represents a Left Reset Turing Machine, which is a type of Universal Turing Machine.
+ * In a Left Reset Turing Machine, the head of the machine resets to the leftmost position whenever a move other than a right move is performed.
+ * The reason for extending the UniversalTuringMachine class is that only needs to override the part of head movement.
+ * This reduces code duplication and improves code maintainability and readability.
  */
-public class LeftResetTuringMachine extends UniversalTuringMachine implements Move {
+public class LeftResetTuringMachine extends UniversalTuringMachine{
     /**
      * Constructs a Left Reset Turing Machine and initializes it.
      *

@@ -1,7 +1,9 @@
 import utm.*;
 
 /**
- * This class represents a Busy Beaver Turing Machine.
+ * This class represents a Busy Beaver Turing Machine, which is a type of Universal Turing Machine.
+ * A Busy Beaver Turing Machine is a specific kind of Turing machine that is designed to maximize the number of steps taken or symbols printed before it halts.
+ * By extending the UniversalTuringMachine class, this class inherits all its methods and properties, and can leverage its functionality to run a Busy Beaver Turing Machine.
  */
 public class BusyBeaverTuringMachine extends UniversalTuringMachine {
 

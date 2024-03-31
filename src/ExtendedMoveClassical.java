@@ -1,8 +1,10 @@
 import utm.*;
 
 /**
- * Represents the types of movement behavior of Turing machines with extended functionality.
- * These movements include moving the tape head to the right, left, or resetting its position.
+ * This enumeration represents the extended movements that a Turing machine can perform.
+ * It implements the Move interface, which means it provides the specific implementations for the types of moves a Turing machine can make.
+ * By implementing the Move interface, this enumeration is ensuring that it adheres to a specific contract of behaviors that any "Move" should have.
+ * This is beneficial as it provides a clear and consistent structure for different types of moves, and allows for the possibility of adding more types of moves in the future.
  */
 public enum ExtendedMoveClassical implements Move {
 

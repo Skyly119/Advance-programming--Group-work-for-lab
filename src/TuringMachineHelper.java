@@ -83,6 +83,7 @@ public class TuringMachineHelper {
     public void runTuringMachine(UniversalTuringMachine utm, boolean isAnimated) {
         TuringMachine machine = utm.getTuringMachine();
         Head head = machine.getHead();
+        // If animation is enabled, display the initial state of the Turing machine
         if (isAnimated) {
             utm.display();
         }
@@ -91,15 +92,19 @@ public class TuringMachineHelper {
             String currentState = head.getCurrentState();
             // Get the current symbol
             char currentCell = machine.getTape().get(head.getCurrentCell());
-            // Look up corresponding rules
+            // Initialize variables to hold the new state, new cell symbol, and move direction
             String[][] machineRules = machine.getRules();
             String newState = null;
             char newCell = ' ';
             ExtendedMoveClassical move = null;
+            // Iterate over the rules to find a matching rule
             for (String[] machineRule : machineRules) {
+                // If the current state and symbol match a rule
                 if (machineRule[0].equals(currentState) && machineRule[1].charAt(0) == currentCell) {
+                    // Get the new state, new cell symbol, and move direction from the rule
                     newState = machineRule[2];
                     newCell = machineRule[3].charAt(0);
+                    // Determine the move direction based on the rule
                     switch (machineRule[4]) {
                         case "RIGHT" -> move = ExtendedMoveClassical.RIGHT;
                         case "LEFT" -> move = ExtendedMoveClassical.LEFT;
@@ -109,11 +114,11 @@ public class TuringMachineHelper {
                     break;
                 }
             }
+            // If a matching rule was found
             if (newState != null) {
-                // Rule exists
-                // Update the cell
+                // Write the new symbol on the current cell
                 utm.writeOnCurrentCell(newCell);
-                // Move the head
+                // Move the head of the Turing machine
                 switch (move) {
                     case RIGHT -> utm.moveHead(MoveClassical.RIGHT, isAnimated);
                     case LEFT -> utm.moveHead(MoveClassical.LEFT, isAnimated);
