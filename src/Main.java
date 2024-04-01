@@ -25,7 +25,7 @@ public class Main extends UniversalTuringMachine {
         String inputs = args[1];
         boolean isAnimated;
         isAnimated = args[2].equals("--animation");*/
-        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/lr-convert.desc";
+        String fileName = "src/Example/bb-3.desc";
         String inputs = "01010000";
         boolean isAnimated = true;
 
@@ -44,5 +44,6 @@ public class Main extends UniversalTuringMachine {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 }
