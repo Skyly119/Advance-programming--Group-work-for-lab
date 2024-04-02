@@ -51,7 +51,7 @@ public class Main extends UniversalTuringMachine {
     }
 
     @Test
-    public void TestLrAll1(){
+    public void TestLrAll1() {
         Main.main(new String[]{
                 examplePath + "lr-all1.desc",
                 "11110",
@@ -59,5 +59,4 @@ public class Main extends UniversalTuringMachine {
         Tape t = new Tape("XXXX0");
         assertEquals(t, machine.getTape());
     }
-
 }

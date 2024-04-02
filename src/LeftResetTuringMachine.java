@@ -6,7 +6,7 @@ import utm.*;
  * The reason for extending the UniversalTuringMachine class is that only needs to override the part of head movement.
  * This reduces code duplication and improves code maintainability and readability.
  */
-public class LeftResetTuringMachine extends UniversalTuringMachine{
+public class LeftResetTuringMachine extends UniversalTuringMachine {
     /**
      * Constructs a Left Reset Turing Machine and initializes it.
      *
