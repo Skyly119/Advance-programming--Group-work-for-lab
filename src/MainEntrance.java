@@ -11,13 +11,13 @@ import static org.junit.Assert.assertEquals;
  * By extending the UniversalTuringMachine, this class inherits all its methods and properties,
  * and can leverage its functionality to run a Turing machine.
  */
-public class Main extends UniversalTuringMachine {
+public class MainEntrance extends UniversalTuringMachine {
     static TuringMachine machine;
     static String dir = System.getProperty("user.dir");
     static String examplePath = dir + "/src/Example/";
 
     /**
-     * Main method to execute a Turing machine.
+     * MainEntrance method to execute a Turing machine.
      *
      * @param args command line arguments
      */
@@ -29,7 +29,7 @@ public class Main extends UniversalTuringMachine {
         String fileName = args[0];
         String inputs = args[1];
         boolean isAnimated;
-        isAnimated = args[2].equals("--animation");
+        isAnimated = args[2].equals("--nonanimation");
 
         try {
             // Load rules from the file and determine the type of machine
@@ -46,12 +46,14 @@ public class Main extends UniversalTuringMachine {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.exit(0);
+        if (!isAnimated) {
+            System.exit(0);
+        }
     }
 
     @Test
     public void TestLrAll1() {
-        Main.main(new String[]{
+        MainEntrance.main(new String[]{
                 examplePath + "lr-all1.desc",
                 "11110",
                 "--nonanimation"});
