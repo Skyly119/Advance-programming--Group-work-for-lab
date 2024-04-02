@@ -1,4 +1,3 @@
-import javadoc.ClassicTuringMachine;
 import org.junit.Test;
 import utm.*;
 

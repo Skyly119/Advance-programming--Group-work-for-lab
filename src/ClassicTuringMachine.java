@@ -1,5 +1,3 @@
-package javadoc;
-
 import utm.TuringMachine;
 import utm.UniversalTuringMachine;
 
