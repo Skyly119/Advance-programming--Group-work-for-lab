@@ -25,8 +25,8 @@ public class Main extends UniversalTuringMachine {
         String inputs = args[1];
         boolean isAnimated;
         isAnimated = args[2].equals("--animation");*/
-        String fileName = "src/Example/bb-3.desc";
-        String inputs = "01010000";
+        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/classical-1.desc";
+        String inputs = "1";
         boolean isAnimated = true;
 
         try {
