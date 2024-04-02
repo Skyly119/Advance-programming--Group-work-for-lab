@@ -1,7 +1,10 @@
 import javadoc.ClassicTuringMachine;
+import org.junit.Test;
 import utm.*;
 
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -10,6 +13,9 @@ import java.io.IOException;
  * and can leverage its functionality to run a Turing machine.
  */
 public class Main extends UniversalTuringMachine {
+    static TuringMachine machine;
+    static String dir = System.getProperty("user.dir");
+    static String examplePath = dir + "/src/Example/";
 
     /**
      * Main method to execute a Turing machine.
@@ -17,23 +23,20 @@ public class Main extends UniversalTuringMachine {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-/*        if (args.length != 3) {
+        if (args.length != 3) {
             System.out.println("Hey man, input three parameters");
             return;
         }
         String fileName = args[0];
         String inputs = args[1];
         boolean isAnimated;
-        isAnimated = args[2].equals("--animation");*/
-        String fileName = "/Users/skyly/Documents/TheSixSemester/Advanced Programming Lab/Lab1_XWT_Answer/src/Example/classical-1.desc";
-        String inputs = "1";
-        boolean isAnimated = true;
+        isAnimated = args[2].equals("--animation");
 
         try {
             // Load rules from the file and determine the type of machine
             TuringMachineHelper helper = new TuringMachineHelper();
             MachineType machineType = helper.loadRulesFromFile(fileName);
-            TuringMachine machine = helper.createTuringMachine();
+            machine = helper.createTuringMachine();
 
             // Run the appropriate type of Turing machine based on the machine type
             switch (machineType) {
@@ -44,6 +47,17 @@ public class Main extends UniversalTuringMachine {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.exit(0);
+        //System.exit(0);
     }
+
+    @Test
+    public void TestLrAll1(){
+        Main.main(new String[]{
+                examplePath + "lr-all1.desc",
+                "11110",
+                "--nonanimation"});
+        Tape t = new Tape("XXXX0");
+        assertEquals(t, machine.getTape());
+    }
+
 }
