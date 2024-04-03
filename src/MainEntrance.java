@@ -61,7 +61,7 @@ public class MainEntrance extends UniversalTuringMachine {
         MainEntrance.main(new String[]{
                 examplePath + "lr-all1.desc",
                 "11110",
-                "--noanimation"});
+                "--animation"});
         Tape t = new Tape("XXXX0");
         assertEquals(t, machine.getTape());
     }

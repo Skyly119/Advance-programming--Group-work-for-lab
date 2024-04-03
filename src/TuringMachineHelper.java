@@ -60,12 +60,7 @@ public class TuringMachineHelper {
         String rejectState = properties.getProperty("rejectState");
         TuringMachine machine = new TuringMachine(count, initialState, acceptState, rejectState);
         for (String rule : rules) {
-            Move moveRule = switch (rule.split(",")[4]) {
-                case "RIGHT" -> MoveClassical.RIGHT;
-                case "LEFT" -> MoveClassical.LEFT;
-                case "RESET" -> ExtendedMoveClassical.RESET;
-                default -> throw new IllegalArgumentException("Invalid move rule: " + rule.split(",")[4]);
-            };
+            Move moveRule = switchMoveTypeHelper(rule.split(",")[4]);
             machine.addRule(rule.split(",")[0], rule.split(",")[1].toCharArray()[0], rule.split(",")[2],
                     rule.split(",")[3].toCharArray()[0], moveRule);
         }
@@ -105,12 +100,7 @@ public class TuringMachineHelper {
                     newState = machineRule[2];
                     newCell = machineRule[3].charAt(0);
                     // Determine the move direction based on the rule
-                    switch (machineRule[4]) {
-                        case "RIGHT" -> move = MoveClassical.RIGHT;
-                        case "LEFT" -> move = MoveClassical.LEFT;
-                        case "RESET" -> move = ExtendedMoveClassical.RESET;
-                        default -> throw new IllegalArgumentException("Invalid machine rule: " + machineRule[4]);
-                    }
+                    move = switchMoveTypeHelper(machineRule[4]);
                     break;
                 }
             }
@@ -135,6 +125,17 @@ public class TuringMachineHelper {
                 break;
             }
         }
+    }
+
+    public Move switchMoveTypeHelper(String string) {
+        Move move;
+        switch (string) {
+            case "RIGHT" -> move = MoveClassical.RIGHT;
+            case "LEFT" -> move = MoveClassical.LEFT;
+            case "RESET" -> move = ExtendedMoveClassical.RESET;
+            default -> throw new IllegalArgumentException("Invalid type: " + string);
+        }
+        return move;
     }
 }
 
