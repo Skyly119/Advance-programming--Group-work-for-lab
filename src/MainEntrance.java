@@ -23,13 +23,18 @@ public class MainEntrance extends UniversalTuringMachine {
      */
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.out.println("Hey man, input three parameters");
-            return;
+            throw new IllegalArgumentException("Incorrect number of parameters. Expected 3, got " + args.length);
         }
         String fileName = args[0];
         String inputs = args[1];
         boolean isAnimated;
-        isAnimated = args[2].equals("--nonanimation");
+        if (args[2].equals("--animation")) {
+            isAnimated = true;
+        } else if (args[2].equals("--noanimation")) {
+            isAnimated = false;
+        } else {
+            throw new IllegalArgumentException("Unknown argument: " + args[2]);
+        }
 
         try {
             // Load rules from the file and determine the type of machine
@@ -56,7 +61,7 @@ public class MainEntrance extends UniversalTuringMachine {
         MainEntrance.main(new String[]{
                 examplePath + "lr-all1.desc",
                 "11110",
-                "--nonanimation"});
+                "--noanimation"});
         Tape t = new Tape("XXXX0");
         assertEquals(t, machine.getTape());
     }

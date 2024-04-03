@@ -30,13 +30,14 @@ public class LeftResetTuringMachine extends UniversalTuringMachine {
      */
     @Override
     public void moveHead(Move move, boolean isAnimated) {
-        // Check if the move is not a right move
-        if (move != MoveClassical.RIGHT) {
-            // If it's a RESET move, reset the tape head to the leftmost position
-            this.getTuringMachine().getHead().reset();
+        if (move instanceof MoveClassical classicalMove) {
+            if (classicalMove.equals(MoveClassical.RIGHT)) {
+                super.moveHead(classicalMove, isAnimated);
+            } else {
+                throw new IllegalArgumentException("Unexpected move: " + classicalMove);
+            }
         } else {
-            // If it's not a RESET move, call the moveHead method of the superclass
-            super.moveHead(MoveClassical.RIGHT, isAnimated);
+            this.getTuringMachine().getHead().reset();
         }
     }
 }

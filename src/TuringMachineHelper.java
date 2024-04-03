@@ -32,14 +32,14 @@ public class TuringMachineHelper {
      * and splits rules and saves them. Finally, it returns the type of the Turing machine read and the MachineType judgment.
      *
      * @param fileName the file name to read data from
-     * @return the type of Turing machine read
+     * @return the type of Turing machine read in MachineType
      * @throws IOException if an I/O error occurs
      */
     public MachineType loadRulesFromFile(String fileName) throws IOException {
         try {
             properties.load(new FileInputStream(fileName));
         } catch (IOException e) {
-            System.out.println();
+            System.err.println();
         }
         String[] ruleParts = properties.getProperty("rules").split("<>");
         rules.addAll(Arrays.asList(ruleParts));
@@ -96,7 +96,7 @@ public class TuringMachineHelper {
             String[][] machineRules = machine.getRules();
             String newState = null;
             char newCell = ' ';
-            ExtendedMoveClassical move = null;
+            Move move = null;
             // Iterate over the rules to find a matching rule
             for (String[] machineRule : machineRules) {
                 // If the current state and symbol match a rule
@@ -106,8 +106,8 @@ public class TuringMachineHelper {
                     newCell = machineRule[3].charAt(0);
                     // Determine the move direction based on the rule
                     switch (machineRule[4]) {
-                        case "RIGHT" -> move = ExtendedMoveClassical.RIGHT;
-                        case "LEFT" -> move = ExtendedMoveClassical.LEFT;
+                        case "RIGHT" -> move = MoveClassical.RIGHT;
+                        case "LEFT" -> move = MoveClassical.LEFT;
                         case "RESET" -> move = ExtendedMoveClassical.RESET;
                         default -> throw new IllegalArgumentException("Invalid machine rule: " + machineRule[4]);
                     }
@@ -119,12 +119,7 @@ public class TuringMachineHelper {
                 // Write the new symbol on the current cell
                 utm.writeOnCurrentCell(newCell);
                 // Move the head of the Turing machine
-                switch (move) {
-                    case RIGHT -> utm.moveHead(MoveClassical.RIGHT, isAnimated);
-                    case LEFT -> utm.moveHead(MoveClassical.LEFT, isAnimated);
-                    case RESET -> utm.moveHead(ExtendedMoveClassical.RESET, isAnimated);
-                    default -> throw new IllegalArgumentException("Invalid move : " + move);
-                }
+                utm.moveHead(move, isAnimated);
                 // Update the state
                 utm.updateHeadState(newState);
                 // Check for halting
@@ -134,7 +129,8 @@ public class TuringMachineHelper {
                             ? HaltState.ACCEPTED : HaltState.REJECTED);
                     break;
                 }
-            } else {// No matching rule
+            } else {
+                // No matching rule
                 utm.displayHaltState(HaltState.REJECTED);
                 break;
             }
