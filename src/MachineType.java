@@ -27,9 +27,9 @@ public enum MachineType {
      */
     public static MachineType convertStringToType(String string) {
         return switch (string) {
-            case "LR" -> LR;
-            case "BB" -> BB;
-            case "U" -> U;
+            case "LEFT_RESET" -> LR;
+            case "BUSY_BEAVER" -> BB;
+            case "CLASSICAL" -> U;
             default -> throw new IllegalArgumentException("Error: None acceptable type");
         };
     }

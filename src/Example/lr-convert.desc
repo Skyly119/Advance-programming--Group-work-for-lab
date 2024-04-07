@@ -5,6 +5,7 @@
 initialState=q0
 acceptState=qa
 rejectState=qr
-type=LR
+variant=LEFT_RESET
+
 #Converts 0->1 and 1->0 and then resets
 rules=q0,1,q0,0,RIGHT<>q0,0,q0,1,RIGHT<>q0,*,qa,*,RESET

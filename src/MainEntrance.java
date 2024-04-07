@@ -22,7 +22,9 @@ public class MainEntrance extends UniversalTuringMachine {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length == 0) {
+            // TODO: finish  4
+        } else if (args.length != 3) {
             throw new IllegalArgumentException("Incorrect number of parameters. Expected 3, got " + args.length);
         }
         String fileName = args[0];
@@ -59,10 +61,10 @@ public class MainEntrance extends UniversalTuringMachine {
     @Test
     public void TestLrAll1() {
         MainEntrance.main(new String[]{
-                examplePath + "lr-all1.desc",
-                "11110",
+                examplePath + "classical-1.desc",
+                "111110",
                 "--animation"});
-        Tape t = new Tape("XXXX0");
+        Tape t = new Tape("011110");
         assertEquals(t, machine.getTape());
     }
 }

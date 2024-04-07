@@ -39,11 +39,11 @@ public class TuringMachineHelper {
         try {
             properties.load(new FileInputStream(fileName));
         } catch (IOException e) {
-            System.err.println();
+            //System.err.println();
         }
         String[] ruleParts = properties.getProperty("rules").split("<>");
         rules.addAll(Arrays.asList(ruleParts));
-        return MachineType.convertStringToType(properties.getProperty("type"));
+        return MachineType.convertStringToType(properties.getProperty("variant"));
     }
 
     /**
