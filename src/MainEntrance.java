@@ -29,7 +29,11 @@ public class MainEntrance extends UniversalTuringMachine {
         boolean isAnimated;
         Controller controller;
         if (args.length == 0) {
+<<<<<<< HEAD
             controller = new Controller(true, machine);
+=======
+            Controller controller1 = new Controller(true,machine);
+>>>>>>> fd7f9d416ce30e7f19bb88b77af980d89d71ee56
             UTMEditor utmEditor = new UTMEditor();
             utmEditor.setUTMController(controller);
             return;
