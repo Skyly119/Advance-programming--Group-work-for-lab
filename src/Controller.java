@@ -3,6 +3,7 @@ import utm.UniversalTuringMachine;
 import utmeditor.UTMController;
 
 import java.io.IOException;
+
 /**
  * @author xue
  * @date 2024/4/7 21:33:09
@@ -13,10 +14,12 @@ public class Controller implements UTMController {
         this.isAnimated = isAnimated;
         this.machine = machine;
     }
+
     private boolean isAnimated;
     private TuringMachine machine;
     private TuringMachineHelper helper;
     private MachineType machineType;
+
     @Override
     public void loadTuringMachineFrom(String fileName) {
         try {

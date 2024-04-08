@@ -27,12 +27,13 @@ public class MainEntrance extends UniversalTuringMachine {
      */
     public static void main(String[] args) {
         boolean isAnimated;
+        Controller controller;
         if (args.length == 0) {
-            Controller controller1 = new Controller(false,machine);
+            controller = new Controller(true, machine);
             UTMEditor utmEditor = new UTMEditor();
-            utmEditor.setUTMController(controller1);
+            utmEditor.setUTMController(controller);
             return;
-        }else{
+        } else {
             if (args.length != 3) {
                 throw new IllegalArgumentException("Incorrect number of parameters. Expected 3, got " + args.length);
             }
@@ -43,11 +44,11 @@ public class MainEntrance extends UniversalTuringMachine {
             } else {
                 throw new IllegalArgumentException("Unknown argument: " + args[2]);
             }
-            Controller controller2 = new Controller(isAnimated,machine);
+            controller = new Controller(isAnimated, machine);
             String fileName = args[0];
             String inputs = args[1];
-            controller2.loadTuringMachineFrom(fileName);
-            controller2.runUTM(inputs);
+            controller.loadTuringMachineFrom(fileName);
+            controller.runUTM(inputs);
         }
         if (!isAnimated) {
             System.exit(0);

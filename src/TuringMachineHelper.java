@@ -128,6 +128,11 @@ public class TuringMachineHelper{
         }
     }
 
+    /**
+     * this is the helper function, switch-cases exists in above programs multiple times
+     * @param string the input string
+     * @return move return a specific Move type that can be handled
+     */
     public Move switchMoveTypeHelper(String string) {
         Move move;
         switch (string) {
