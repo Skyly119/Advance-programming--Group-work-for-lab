@@ -49,34 +49,6 @@ public class MainEntrance extends UniversalTuringMachine {
             controller2.loadTuringMachineFrom(fileName);
             controller2.runUTM(inputs);
         }
-
-//        if(isEditor == true){
-//            UTMEditor utmEditor = new UTMEditor();
-//            utmEditor.setUTMController(controller);
-//        }
-//        String fileName = args[0];
-//        String inputs = args[1];
-//
-//        controller.setDefaultCloseOperation(3);
-//        controller.loadTuringMachineFrom(fileName);
-//        controller.runUTM(inputs);
-        // 还没有实现怎么可以在editor中输入文件名，使得controller可以按输入的文件名进行动画演示
-
-//        try {
-//            // Load rules from the file and determine the type of machine
-//            TuringMachineHelper helper = new TuringMachineHelper();
-//            MachineType machineType = helper.loadRulesFromFile(fileName);
-//            machine = helper.createTuringMachine();
-//
-//            // Run the appropriate type of Turing machine based on the machine type
-//            switch (machineType) {
-//                case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);
-//                case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine), isAnimated);
-//                case U -> helper.runTuringMachine(new ClassicTuringMachine(machine, inputs), isAnimated);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         if (!isAnimated) {
             System.exit(0);
         }
