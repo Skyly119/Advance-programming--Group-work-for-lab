@@ -29,9 +29,8 @@ public class MainEntrance extends UniversalTuringMachine {
         boolean isAnimated;
         Controller controller;
         if (args.length == 0) {
-
+            // If args.length == 0, executing Mode 3, a TM is executed with the UTM Editor and with graphical animation on the UTM GUI
             controller = new Controller(true, machine);
-
             UTMEditor utmEditor = new UTMEditor();
             utmEditor.setUTMController(controller);
             return;
@@ -39,6 +38,9 @@ public class MainEntrance extends UniversalTuringMachine {
             if (args.length != 3) {
                 throw new IllegalArgumentException("Incorrect number of parameters. Expected 3, got " + args.length);
             }
+            // If args.length == 3, executing Mode 1 and 2
+            // Mode1: A TM is executed without the UTM Editor and with no graphical animation
+            // Mode2: A TM is executed without the UTM Editor and with graphical animation
             if (args[2].equals("--animation")) {
                 isAnimated = true;
             } else if (args[2].equals("--noanimation")) {
