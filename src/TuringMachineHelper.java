@@ -1,4 +1,5 @@
 import utm.*;
+import utmeditor.UTMController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,18 +15,18 @@ import java.util.Properties;
  * 2. createTuringMachine
  * 3. runTuringMachine
  */
-public class TuringMachineHelper {
+public class TuringMachineHelper{
 
     /**
      * Properties associated with the Turing machine configuration.
      * This can include various parameters and settings.
      */
-    public Properties properties = new Properties();
+    private Properties properties = new Properties();
     /**
      * Rules defining the behavior of the Turing machine.
      * Each rule represents a transition from one state to another based on the current symbol.
      */
-    public ArrayList<String> rules = new ArrayList<>();
+    private ArrayList<String> rules = new ArrayList<>();
 
     /**
      * This method reads data from a file via an input stream, stores properties as key-value pairs using properties.getProperty() method,
