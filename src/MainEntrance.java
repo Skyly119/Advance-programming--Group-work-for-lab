@@ -28,7 +28,7 @@ public class MainEntrance extends UniversalTuringMachine {
     public static void main(String[] args) {
         boolean isAnimated;
         if (args.length == 0) {
-            Controller controller1 = new Controller(false,machine);
+            Controller controller1 = new Controller(true,machine);
             UTMEditor utmEditor = new UTMEditor();
             utmEditor.setUTMController(controller1);
             return;
