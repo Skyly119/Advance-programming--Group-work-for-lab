@@ -6,13 +6,21 @@ import java.io.IOException;
 /**
  * The Controller class is used to load the file and run different Turing machines according to the different machine types,
  * It implements the UTMController, which means that it can be set to the editor and control the animation by the UTM editor
- * This class implements two methods:
  * 1. loadTuringMachineFrom
  * 2. runUTM
  */
 public class Controller implements UTMController {
+    /**
+     * local isAnimated variable
+     */
     private boolean isAnimated;
+    /**
+     * the instance of TuringMachineHelper class
+     */
     private TuringMachineHelper helper;
+    /**
+     * machine type which is used to specify the correct type of machine
+     */
     private MachineType machineType;
 
     /**
