@@ -12,21 +12,21 @@ import java.io.IOException;
  */
 public class Controller implements UTMController {
     private boolean isAnimated;
-    private TuringMachine machine;
     private TuringMachineHelper helper;
     private MachineType machineType;
 
-
-    public Controller(boolean isAnimated, TuringMachine machine) {
+    /**
+     * this is the constructor
+     * @param isAnimated whether we should have animation given the parameter
+     */
+    public Controller(boolean isAnimated) {
         this.isAnimated = isAnimated;
-        this.machine = machine;
     }
 
     /**
      * This method reads data from a file by using the encapsulated method loadRulesFromFile in the TuringMachineHelper class
      *
      * @param fileName the file name to read data from
-     * @throws IOException if an I/O error occurs
      */
     @Override
     public void loadTuringMachineFrom(String fileName) {
@@ -47,7 +47,7 @@ public class Controller implements UTMController {
      */
     @Override
     public void runUTM(String inputs) {
-        machine = helper.createTuringMachine();
+        TuringMachine machine = helper.createTuringMachine();
         // Run the appropriate type of Turing machine based on the machine type
         switch (machineType) {
             case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);

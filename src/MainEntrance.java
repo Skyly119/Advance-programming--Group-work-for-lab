@@ -14,11 +14,10 @@ public class MainEntrance extends UniversalTuringMachine {
      */
     public static void main(String[] args) {
         boolean isAnimated;
-        TuringMachine machine;
         Controller controller;
         if (args.length == 0) {
             // If args.length == 0, executing Mode 3, a TM is executed with the UTM Editor and with graphical animation on the UTM GUI
-            controller = new Controller(true, machine);
+            controller = new Controller(true);
             UTMEditor utmEditor = new UTMEditor();
             utmEditor.setUTMController(controller);
             return;
@@ -36,7 +35,7 @@ public class MainEntrance extends UniversalTuringMachine {
             } else {
                 throw new IllegalArgumentException("Unknown argument: " + args[2]);
             }
-            controller = new Controller(isAnimated, machine);
+            controller = new Controller(isAnimated);
             String fileName = args[0];
             String inputs = args[1];
             controller.loadTuringMachineFrom(fileName);
