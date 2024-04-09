@@ -78,15 +78,6 @@ public class TuringMachineHelper {
     public void runTuringMachine(UniversalTuringMachine utm, boolean isAnimated) {
         TuringMachine machine = utm.getTuringMachine();
         Head head = machine.getHead();
-        // If animation is enabled, display the initial state of the Turing machine
-        if (isAnimated) {
-            utm.display();
-            try {
-                Thread.sleep(400L);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
         while (true) {
             // Get the current state
             String currentState = head.getCurrentState();

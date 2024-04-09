@@ -11,14 +11,10 @@ public class LeftResetTuringMachine extends UniversalTuringMachine {
      * Constructs a Left Reset Turing Machine and initializes it.
      *
      * @param machine the Turing machine bound to this Left Reset Turing Machine
-     * @param inputs  the input string for the Turing machine
      */
-    public LeftResetTuringMachine(TuringMachine machine, String inputs) {
-        super();
+    public LeftResetTuringMachine(TuringMachine machine) {
         // Load the given Turing machine
-        this.loadTuringMachine(machine);
-        // Load the input tape with the provided inputs
-        this.loadInput(inputs);
+        loadTuringMachine(machine);
     }
 
     /**
