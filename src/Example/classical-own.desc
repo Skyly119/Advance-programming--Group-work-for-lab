@@ -6,5 +6,6 @@ initialState=q0
 acceptState=qa
 rejectState=qr
 variant=CLASSICAL
-#Delta Function: Decides whether * or X is the input string and find the first position
-rules=q0,*,qa,*,RIGHT<>q0,X,qr,X,RIGHT<>q0,1,q1,0,RIGHT<>q0,0,q1,1,RIGHT<>q1,*,qa,*,RIGHT<>q1,X,qr,X,RIGHT<>q1,1,q0,0,RIGHT<>q1,0,q0,1,RIGHT
+
+#Delta Function: Decides whether 1 is the first symbol of an input string
+rules=q0,0,qr,0,RIGHT<>q0,1,qa,1,RIGHT<>q0,*,qr,*,RIGHT
