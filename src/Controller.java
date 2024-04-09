@@ -16,10 +16,13 @@ public class Controller implements UTMController {
     private TuringMachineHelper helper;
     private MachineType machineType;
 
-
-    public Controller(boolean isAnimated, TuringMachine machine) {
+    /**
+     * Constructs a controller and set the animation.
+     *
+     * @param isAnimated The machine is animated or not
+     */
+    public Controller(boolean isAnimated) {
         this.isAnimated = isAnimated;
-        this.machine = machine;
     }
 
     /**
