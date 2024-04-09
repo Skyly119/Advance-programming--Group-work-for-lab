@@ -30,14 +30,12 @@ public class LeftResetTuringMachine extends UniversalTuringMachine {
      */
     @Override
     public void moveHead(Move move, boolean isAnimated) {
-        if (move instanceof MoveClassical classicalMove) {
-            if (classicalMove.equals(MoveClassical.RIGHT)) {
-                super.moveHead(classicalMove, isAnimated);
-            } else {
-                throw new IllegalArgumentException("Unexpected move: " + classicalMove);
-            }
-        } else {
-            this.getTuringMachine().getHead().reset();
+        super.moveHead(move, isAnimated);
+        if (move.equals(ExtendedMoveClassical.RESET)) {
+            getTuringMachine().getHead().reset();
+        }
+        if (move.equals(MoveClassical.LEFT)) {
+            throw new IllegalArgumentException("Unexpected move: can not move left");
         }
     }
 }

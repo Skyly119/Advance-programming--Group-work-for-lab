@@ -81,6 +81,11 @@ public class TuringMachineHelper {
         // If animation is enabled, display the initial state of the Turing machine
         if (isAnimated) {
             utm.display();
+            try {
+                Thread.sleep(800L);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         while (true) {
             // Get the current state
