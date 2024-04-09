@@ -7,5 +7,5 @@ acceptState=qa
 rejectState=qr
 variant=CLASSICAL
 
-#Delta Function: Decides whether the string ends with 1
-rules=q0,*,q1,*,LEFT<>q1,1,qa,1,RIGHT<>q1,0,qr,0,RIGHT<>q1,X,qr,X,RIGHT<>q0,1,q0,1,RIGHT<>q0,0,q0,0,RIGHT<>q0,X,q0,X,RIGHT
+#Delta Function: Decides whether the input string length is bigger than zero
+rules=q0,*,qr,*,RIGHT<>q0,1,qa,1,RIGHT<>q0,0,qa,0,RIGHT
