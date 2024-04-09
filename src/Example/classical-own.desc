@@ -6,6 +6,5 @@ initialState=q0
 acceptState=qa
 rejectState=qr
 variant=CLASSICAL
-
-#Delta Function:
-rules=q0,0,q1,1,RIGHT<>q0,1,q1,0,RIGHT<>q0,*,qa,X,RIGHT<>q0,X,qr,*,RIGHT<>q1,0,q0,X,RIGHT<>q1,1,q0,0,RIGHT<>q1,*,qr,1,RIGHT<>q1,X,qa,*,RIGHT
+#Delta Function: Decides whether * or X is the input string and find the first position
+rules=q0,*,qa,*,RIGHT<>q0,X,qr,X,RIGHT<>q0,1,q1,0,RIGHT<>q0,0,q1,1,RIGHT<>q1,*,qa,*,RIGHT<>q1,X,qr,X,RIGHT<>q1,1,q0,0,RIGHT<>q1,0,q0,1,RIGHT
