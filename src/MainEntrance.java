@@ -1,14 +1,5 @@
-import org.junit.Test;
 import utm.*;
-import utmeditor.UTMController;
 import utmeditor.UTMEditor;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-
 
 /**
  * This is the main class of the application which extends the UniversalTuringMachine class.
@@ -16,10 +7,6 @@ import static org.junit.Assert.assertEquals;
  * and can leverage its functionality to run a Turing machine.
  */
 public class MainEntrance extends UniversalTuringMachine {
-    static TuringMachine machine;
-    static String dir = System.getProperty("user.dir");
-    static String examplePath = dir + "/src/Example/";
-
     /**
      * MainEntrance method to execute a Turing machine.
      *
@@ -27,6 +14,7 @@ public class MainEntrance extends UniversalTuringMachine {
      */
     public static void main(String[] args) {
         boolean isAnimated;
+        TuringMachine machine;
         Controller controller;
         if (args.length == 0) {
             // If args.length == 0, executing Mode 3, a TM is executed with the UTM Editor and with graphical animation on the UTM GUI
@@ -57,16 +45,5 @@ public class MainEntrance extends UniversalTuringMachine {
         if (!isAnimated) {
             System.exit(0);
         }
-    }
-
-    @Test
-    public void TestLrAll1() {
-        MainEntrance.main(new String[]{
-                examplePath + "bb-2.desc",
-                "111110",
-                "--animation"
-        });
-//        Tape t = new Tape("011110");
-//        assertEquals(t, machine.getTape());
     }
 }

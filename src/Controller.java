@@ -1,5 +1,4 @@
 import utm.TuringMachine;
-import utm.UniversalTuringMachine;
 import utmeditor.UTMController;
 
 import java.io.IOException;
@@ -12,15 +11,16 @@ import java.io.IOException;
  * 2. runUTM
  */
 public class Controller implements UTMController {
-    public Controller(boolean isAnimated, TuringMachine machine) {
-        this.isAnimated = isAnimated;
-        this.machine = machine;
-    }
-
     private boolean isAnimated;
     private TuringMachine machine;
     private TuringMachineHelper helper;
     private MachineType machineType;
+
+
+    public Controller(boolean isAnimated, TuringMachine machine) {
+        this.isAnimated = isAnimated;
+        this.machine = machine;
+    }
 
     /**
      * This method reads data from a file by using the encapsulated method loadRulesFromFile in the TuringMachineHelper class

@@ -1,5 +1,4 @@
 import utm.*;
-import utmeditor.UTMController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.util.Properties;
  * 2. createTuringMachine
  * 3. runTuringMachine
  */
-public class TuringMachineHelper{
+public class TuringMachineHelper {
 
     /**
      * Properties associated with the Turing machine configuration.
@@ -130,6 +129,7 @@ public class TuringMachineHelper{
 
     /**
      * this is the helper function, switch-cases exists in above programs multiple times
+     *
      * @param string the input string
      * @return move return a specific Move type that can be handled
      */
