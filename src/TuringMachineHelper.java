@@ -133,7 +133,7 @@ public class TuringMachineHelper {
      * @param string the input string
      * @return move return a specific Move type that can be handled
      */
-    public Move switchMoveTypeHelper(String string) {
+    private Move switchMoveTypeHelper(String string) {
         Move move;
         switch (string) {
             case "RIGHT" -> move = MoveClassical.RIGHT;
