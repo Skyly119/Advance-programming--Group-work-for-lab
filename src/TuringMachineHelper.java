@@ -82,7 +82,7 @@ public class TuringMachineHelper {
         if (isAnimated) {
             utm.display();
             try {
-                Thread.sleep(800L);
+                Thread.sleep(400L);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
