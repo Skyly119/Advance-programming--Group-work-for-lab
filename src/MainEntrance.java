@@ -35,12 +35,13 @@ public class MainEntrance extends UniversalTuringMachine {
             } else {
                 throw new IllegalArgumentException("Unknown argument: " + args[2]);
             }
-            controller = new Controller(isAnimated);
             String fileName = args[0];
             String inputs = args[1];
+            controller = new Controller(isAnimated);
             controller.loadTuringMachineFrom(fileName);
             controller.runUTM(inputs);
         }
+        // make sure program end fast in no-animation mode
         if (!isAnimated) {
             System.exit(0);
         }

@@ -14,8 +14,6 @@ public class BusyBeaverTuringMachine extends UniversalTuringMachine {
      * @param machine the Turing machine loaded in the Busy Beaver Turing Machine
      */
     public BusyBeaverTuringMachine(TuringMachine machine) {
-        super();
-        // Load the given Turing machine
         this.loadTuringMachine(machine);
         this.loadInput("00000000000000000000");
         for (int i = 0; i < 9; i++) {

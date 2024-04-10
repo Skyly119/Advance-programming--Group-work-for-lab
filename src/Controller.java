@@ -11,7 +11,13 @@ import java.io.IOException;
  * 2. runUTM
  */
 public class Controller implements UTMController {
+    /**
+     * Instance of the TuringMachine class
+     */
     TuringMachine machine = null;
+    /**
+     * Instance of the UniversalTuringMachine class
+     */
     UniversalTuringMachine utm = null;
     /**
      * local isAnimated variable
@@ -28,6 +34,7 @@ public class Controller implements UTMController {
 
     /**
      * this is the constructor
+     *
      * @param isAnimated whether we should have animation given the parameter
      */
     public Controller(boolean isAnimated) {
@@ -35,9 +42,11 @@ public class Controller implements UTMController {
     }
 
     /**
-     * This method reads data from a file by using the encapsulated method loadRulesFromFile in the TuringMachineHelper class
+     * This method reads data from a file and initializes the Turing Machine accordingly.
+     * It utilizes the encapsulated method loadRulesFromFile in the TuringMachineHelper class
+     * to load rules from the specified file and determine the type of machine.
      *
-     * @param fileName the file name to read data from
+     * @param fileName the name of the file to read data from
      */
     @Override
     public void loadTuringMachineFrom(String fileName) {
@@ -51,7 +60,7 @@ public class Controller implements UTMController {
                 case BB -> utm = new BusyBeaverTuringMachine(machine);
                 case U -> utm = new ClassicTuringMachine(machine);
             }
-            if(isAnimated){
+            if (isAnimated) {
                 utm.display();
             }
         } catch (IOException e) {
@@ -60,16 +69,20 @@ public class Controller implements UTMController {
     }
 
     /**
-     * This method runs the UniversalTuringMachine according to the inputs by using the encapsulated method runTuringMachine in the TuringMachineHelper class
-     * It can run different Turing machines by different machine types
+     * This method runs the Universal Turing Machine (UTM) with the given inputs.
+     * It utilizes the encapsulated method runTuringMachine in the TuringMachineHelper class
+     * to execute the UTM or specific Turing machines based on their types.
      *
-     * @param inputs Initial value of tape
+     * @param inputs the initial values of the tape
      */
     @Override
     public void runUTM(String inputs) {
         // Run the appropriate type of Turing machine based on the machine type
         switch (machineType) {
-            case LR, U -> {utm.loadInput(inputs);helper.runTuringMachine(utm, isAnimated);}
+            case LR, U -> {
+                utm.loadInput(inputs);
+                helper.runTuringMachine(utm, isAnimated);
+            }
             case BB -> helper.runTuringMachine(utm, isAnimated);
         }
     }

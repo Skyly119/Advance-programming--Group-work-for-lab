@@ -13,7 +13,6 @@ public class LeftResetTuringMachine extends UniversalTuringMachine {
      * @param machine the Turing machine bound to this Left Reset Turing Machine
      */
     public LeftResetTuringMachine(TuringMachine machine) {
-        // Load the given Turing machine
         loadTuringMachine(machine);
     }
 
