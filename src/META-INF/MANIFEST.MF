@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: MainEntrance
+Class-Path: junit-4.13.1.jar hamcrest-core-1.3.jar turingmachines.jar
 
