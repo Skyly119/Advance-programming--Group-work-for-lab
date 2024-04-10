@@ -1,4 +1,5 @@
 import utm.TuringMachine;
+import utm.UniversalTuringMachine;
 import utmeditor.UTMController;
 
 import java.io.IOException;
@@ -10,6 +11,8 @@ import java.io.IOException;
  * 2. runUTM
  */
 public class Controller implements UTMController {
+    TuringMachine machine = null;
+    UniversalTuringMachine utm = null;
     /**
      * local isAnimated variable
      */
@@ -42,6 +45,15 @@ public class Controller implements UTMController {
             // Load rules from the file and determine the type of machine
             helper = new TuringMachineHelper();
             machineType = helper.loadRulesFromFile(fileName);
+            machine = helper.createTuringMachine();
+            switch (machineType) {
+                case LR -> utm = new LeftResetTuringMachine(machine);
+                case BB -> utm = new BusyBeaverTuringMachine(machine);
+                case U -> utm = new ClassicTuringMachine(machine);
+            }
+            if(isAnimated){
+                utm.display();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,12 +67,10 @@ public class Controller implements UTMController {
      */
     @Override
     public void runUTM(String inputs) {
-        TuringMachine machine = helper.createTuringMachine();
         // Run the appropriate type of Turing machine based on the machine type
         switch (machineType) {
-            case LR -> helper.runTuringMachine(new LeftResetTuringMachine(machine, inputs), isAnimated);
-            case BB -> helper.runTuringMachine(new BusyBeaverTuringMachine(machine), isAnimated);
-            case U -> helper.runTuringMachine(new ClassicTuringMachine(machine, inputs), isAnimated);
+            case LR, U -> {utm.loadInput(inputs);helper.runTuringMachine(utm, isAnimated);}
+            case BB -> helper.runTuringMachine(utm, isAnimated);
         }
     }
 }
